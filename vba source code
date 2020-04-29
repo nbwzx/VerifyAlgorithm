@@ -1,0 +1,1786 @@
+Dim a(6, 9), c(6, 9) As String
+Dim edgefull_char, cornerfull_char As String
+Dim edge_ch(24) As String
+Dim corner_ch(24) As String
+Dim composition As Long
+Dim kongxue_edge_ch(24) As String
+Dim kongxue_corner_ch(24) As String
+Dim commutator_part0_char1_out As String
+Dim commutator_part0_char2_out As String
+Dim commutator_part0_char0_out As String
+Dim commutator_part1_char0_out As String
+Dim commutator_part1_char1_out As String
+Dim commutator_part1_char2_out As String
+Dim commutator_part2_char0_out As String
+Dim commutator_part2_char1_out As String
+Dim commutator_part2_char2_out As String
+Dim commutator_part2_char3_out As String
+Dim commutator_part2_char4_out As String
+Dim commutator_part2_char5_out As String
+Dim afterpro_char0_out  As String
+Dim afterpro_char1_out  As String
+Dim afterpro_char2_out  As String
+Dim leftpart As String
+Dim rightpart As String
+Function inverse_one(s1)     '对单个字符取逆
+If Len(s1) = 1 Then
+inverse_one = s1 & "'"
+End If
+If Len(s1) = 2 Then
+If Mid(s1, 2, 1) = "2" Then
+inverse_one = s1
+End If
+If Mid(s1, 2, 1) = "'" Then
+inverse_one = Mid(s1, 1, 1)
+End If
+End If
+End Function
+Function inverse(s1 As String) As String  '对公式取逆
+Dim arr
+If s1 = "" Then
+inverse = ""
+Exit Function
+End If
+arr = Split(s1, " ")
+For i = UBound(arr) To 0 Step -1
+inverse = inverse & inverse_one(arr(i)) & " "
+Next i
+inverse = Mid(inverse, 1, Len(inverse) - 1)
+End Function
+Public Sub transformation1(transformation1_a, transformation1_b, transformation1_c, transformation1_d As Long)
+c(transformation1_a, transformation1_b) = a(transformation1_a, transformation1_b)
+a(transformation1_a, transformation1_b) = c(transformation1_c, transformation1_d)
+End Sub
+Public Sub transformation2(transformation2_a, transformation2_b, transformation2_c, transformation2_d As Long)
+c(transformation2_a, transformation2_b) = a(transformation2_a, transformation2_b)
+a(transformation2_a, transformation2_b) = a(transformation2_c, transformation2_d)
+End Sub
+Public Sub f()
+Dim i As Long
+For i = 1 To 9
+c(5, i) = a(5, i)
+Next i
+a(5, 1) = a(5, 7): a(5, 7) = a(5, 9): a(5, 9) = a(5, 3): a(5, 3) = c(5, 1)
+a(5, 2) = a(5, 4): a(5, 4) = a(5, 8): a(5, 8) = a(5, 6): a(5, 6) = c(5, 2)
+For i = 1 To 3
+Call transformation2(3, 3 * i, 2, i)
+Next i
+For i = 1 To 3
+Call transformation2(2, i, 4, 10 - 3 * i)
+Next i
+For i = 1 To 3
+Call transformation2(4, 3 * i - 2, 1, 6 + i)
+Next i
+For i = 1 To 3
+Call transformation1(1, 6 + i, 3, 12 - 3 * i)
+Next i
+End Sub
+Public Sub x()
+Dim i As Long
+For i = 1 To 9
+c(3, i) = a(3, i)
+c(4, i) = a(4, i)
+Next i
+a(3, 1) = a(3, 3): a(3, 3) = a(3, 9): a(3, 9) = a(3, 7): a(3, 7) = c(3, 1)
+a(3, 2) = a(3, 6): a(3, 6) = a(3, 8): a(3, 8) = a(3, 4): a(3, 4) = c(3, 2)
+a(4, 1) = a(4, 7): a(4, 7) = a(4, 9): a(4, 9) = a(4, 3): a(4, 3) = c(4, 1)
+a(4, 2) = a(4, 4): a(4, 4) = a(4, 8): a(4, 8) = a(4, 6): a(4, 6) = c(4, 2)
+For i = 1 To 9
+Call transformation2(6, i, 1, 10 - i)
+Next i
+For i = 1 To 9
+Call transformation1(2, i, 6, 10 - i)
+Next i
+For i = 1 To 9
+Call transformation1(5, i, 2, i)
+Next i
+For i = 1 To 9
+Call transformation1(1, i, 5, i)
+Next i
+End Sub
+Public Sub y()
+Dim i As Long
+For i = 1 To 9
+c(2, i) = a(2, i)
+c(1, i) = a(1, i)
+Next i
+a(2, 1) = a(2, 3): a(2, 3) = a(2, 9): a(2, 9) = a(2, 7): a(2, 7) = c(2, 1)
+a(2, 2) = a(2, 6): a(2, 6) = a(2, 8): a(2, 8) = a(2, 4): a(2, 4) = c(2, 2)
+a(1, 1) = a(1, 7): a(1, 7) = a(1, 9): a(1, 9) = a(1, 3): a(1, 3) = c(1, 1)
+a(1, 2) = a(1, 4): a(1, 4) = a(1, 8): a(1, 8) = a(1, 6): a(1, 6) = c(1, 2)
+For i = 1 To 9
+Call transformation2(6, i, 3, i)
+Next i
+For i = 1 To 9
+Call transformation2(3, i, 5, i)
+Next i
+For i = 1 To 9
+Call transformation2(5, i, 4, i)
+Next i
+For i = 1 To 9
+a(4, i) = c(6, i)
+Next i
+End Sub
+Public Sub z()
+Call x: Call y: Call x: Call x: Call x
+End Sub
+Public Sub l()
+Call y: Call y: Call y: Call f: Call y
+End Sub
+Public Sub u()
+Call x: Call x: Call x: Call f: Call x
+End Sub
+Public Sub b()
+Call x: Call x: Call f: Call x: Call x
+End Sub
+Public Sub r()
+Call y: Call f: Call y: Call y: Call y
+End Sub
+Public Sub d()
+Call x: Call f: Call x: Call x: Call x
+End Sub
+Public Sub di()
+Call d: Call d: Call d
+End Sub
+Public Sub li()
+Call l: Call l: Call l
+End Sub
+Public Sub ri()
+Call r: Call r: Call r
+End Sub
+Public Sub fi()
+Call f: Call f: Call f
+End Sub
+Public Sub ui()
+Call u: Call u: Call u
+End Sub
+Public Sub bi()
+Call b: Call b: Call b
+End Sub
+Public Sub d2()
+Call d: Call d
+End Sub
+Public Sub l2()
+Call l: Call l
+End Sub
+Public Sub r2()
+Call r: Call r
+End Sub
+Public Sub f2()
+Call f: Call f
+End Sub
+Public Sub u2()
+Call u: Call u
+End Sub
+Public Sub b2()
+Call b: Call b
+End Sub
+Public Sub xr()
+Call l: Call x
+End Sub
+Public Sub xf()
+Call b: Call z
+End Sub
+Public Sub xu()
+Call d: Call y
+End Sub
+Public Sub xd()
+Call u: Call y: Call y: Call y
+End Sub
+Public Sub xl()
+Call r: Call x: Call x: Call x
+End Sub
+Public Sub xb()
+Call f: Call z: Call z: Call z
+End Sub
+Public Sub x2()
+Call x: Call x
+End Sub
+Public Sub y2()
+Call y: Call y
+End Sub
+Public Sub z2()
+Call z: Call z
+End Sub
+Public Sub xi()
+Call x: Call x: Call x
+End Sub
+Public Sub yi()
+Call y: Call y: Call y
+End Sub
+Public Sub zi()
+Call z: Call z: Call z
+End Sub
+Public Sub m()
+Call r: Call li: Call x: Call x: Call x
+End Sub
+Public Sub m2()
+Call r2: Call l2: Call x2
+End Sub
+Public Sub mi()
+Call x: Call l: Call r: Call r: Call r
+End Sub
+Public Sub s()
+Call f: Call f: Call f: Call b: Call z
+End Sub
+Public Sub s2()
+Call f2: Call b2: Call z2
+End Sub
+Public Sub si()
+Call z: Call z: Call z: Call b: Call b: Call b: Call f
+End Sub
+Public Sub e()
+Call u: Call d: Call d: Call d: Call y: Call y: Call y
+End Sub
+Public Sub e2()
+Call u2: Call d2: Call y2
+End Sub
+Public Sub ei()
+Call y: Call d: Call u: Call u: Call u
+End Sub
+Public Sub xr2()
+Call xr: Call xr
+End Sub
+Public Sub xf2()
+Call xf: Call xf
+End Sub
+Public Sub xu2()
+Call xu: Call xu
+End Sub
+Public Sub xd2()
+Call xd: Call xd
+End Sub
+Public Sub xl2()
+Call xl: Call xl
+End Sub
+Public Sub xb2()
+Call xb: Call xb
+End Sub
+Public Sub xri()
+Call xr: Call xr: Call xr
+End Sub
+Public Sub xfi()
+Call xf: Call xf: Call xf
+End Sub
+Public Sub xui()
+Call xu: Call xu: Call xu
+End Sub
+Public Sub xdi()
+Call xd: Call xd: Call xd
+End Sub
+Public Sub xli()
+Call xl: Call xl: Call xl
+End Sub
+Public Sub xbi()
+Call xb: Call xb: Call xb
+End Sub
+Sub output()         '单元格输出
+Range("E7") = a(1, 1)
+Range("F7") = a(1, 2)
+Range("G7") = a(1, 3)
+Range("E8") = a(1, 4)
+Range("F8") = a(1, 5)
+Range("G8") = a(1, 6)
+Range("E9") = a(1, 7)
+Range("F9") = a(1, 8)
+Range("G9") = a(1, 9)
+Range("E13") = a(2, 1)
+Range("F13") = a(2, 2)
+Range("G13") = a(2, 3)
+Range("E14") = a(2, 4)
+Range("F14") = a(2, 5)
+Range("G14") = a(2, 6)
+Range("E15") = a(2, 7)
+Range("F15") = a(2, 8)
+Range("G15") = a(2, 9)
+Range("B10") = a(3, 1)
+Range("C10") = a(3, 2)
+Range("D10") = a(3, 3)
+Range("B11") = a(3, 4)
+Range("C11") = a(3, 5)
+Range("D11") = a(3, 6)
+Range("B12") = a(3, 7)
+Range("C12") = a(3, 8)
+Range("D12") = a(3, 9)
+Range("H10") = a(4, 1)
+Range("I10") = a(4, 2)
+Range("J10") = a(4, 3)
+Range("H11") = a(4, 4)
+Range("I11") = a(4, 5)
+Range("J11") = a(4, 6)
+Range("H12") = a(4, 7)
+Range("I12") = a(4, 8)
+Range("J12") = a(4, 9)
+Range("E10") = a(5, 1)
+Range("F10") = a(5, 2)
+Range("G10") = a(5, 3)
+Range("E11") = a(5, 4)
+Range("F11") = a(5, 5)
+Range("G11") = a(5, 6)
+Range("E12") = a(5, 7)
+Range("F12") = a(5, 8)
+Range("G12") = a(5, 9)
+Range("K10") = a(6, 1)
+Range("L10") = a(6, 2)
+Range("M10") = a(6, 3)
+Range("K11") = a(6, 4)
+Range("L11") = a(6, 5)
+Range("M11") = a(6, 6)
+Range("K12") = a(6, 7)
+Range("L12") = a(6, 8)
+Range("M12") = a(6, 9)
+End Sub
+Sub read()        '单元格读取
+a(1, 1) = Range("E7")
+a(1, 2) = Range("F7")
+a(1, 3) = Range("G7")
+a(1, 4) = Range("E8")
+a(1, 5) = Range("F8")
+a(1, 6) = Range("G8")
+a(1, 7) = Range("E9")
+a(1, 8) = Range("F9")
+a(1, 9) = Range("G9")
+a(2, 1) = Range("E13")
+a(2, 2) = Range("F13")
+a(2, 3) = Range("G13")
+a(2, 4) = Range("E14")
+a(2, 5) = Range("F14")
+a(2, 6) = Range("G14")
+a(2, 7) = Range("E15")
+a(2, 8) = Range("F15")
+a(2, 9) = Range("G15")
+a(3, 1) = Range("B10")
+a(3, 2) = Range("C10")
+a(3, 3) = Range("D10")
+a(3, 4) = Range("B11")
+a(3, 5) = Range("C11")
+a(3, 6) = Range("D11")
+a(3, 7) = Range("B12")
+a(3, 8) = Range("C12")
+a(3, 9) = Range("D12")
+a(4, 1) = Range("H10")
+a(4, 2) = Range("I10")
+a(4, 3) = Range("J10")
+a(4, 4) = Range("H11")
+a(4, 5) = Range("I11")
+a(4, 6) = Range("J11")
+a(4, 7) = Range("H12")
+a(4, 8) = Range("I12")
+a(4, 9) = Range("J12")
+a(5, 1) = Range("E10")
+a(5, 2) = Range("F10")
+a(5, 3) = Range("G10")
+a(5, 4) = Range("E11")
+a(5, 5) = Range("F11")
+a(5, 6) = Range("G11")
+a(5, 7) = Range("E12")
+a(5, 8) = Range("F12")
+a(5, 9) = Range("G12")
+a(6, 1) = Range("K10")
+a(6, 2) = Range("L10")
+a(6, 3) = Range("M10")
+a(6, 4) = Range("K11")
+a(6, 5) = Range("L11")
+a(6, 6) = Range("M11")
+a(6, 7) = Range("K12")
+a(6, 8) = Range("L12")
+a(6, 9) = Range("M12")
+End Sub
+Public Sub initialize()     '按照彳亍编码初始化数组
+a(1, 1) = "D"
+a(1, 2) = "E"
+a(1, 3) = "G"
+a(1, 4) = "C"
+a(1, 5) = "U"
+a(1, 6) = "G"
+a(1, 7) = "A"
+a(1, 8) = "A"
+a(1, 9) = "J"
+a(2, 1) = "W"
+a(2, 2) = "I"
+a(2, 3) = "X"
+a(2, 4) = "K"
+a(2, 5) = "D"
+a(2, 6) = "O"
+a(2, 7) = "O"
+a(2, 8) = "M"
+a(2, 9) = "R"
+a(3, 1) = "E"
+a(3, 2) = "D"
+a(3, 3) = "C"
+a(3, 4) = "X"
+a(3, 5) = "L"
+a(3, 6) = "T"
+a(3, 7) = "Q"
+a(3, 8) = "L"
+a(3, 9) = "M"
+a(4, 1) = "K"
+a(4, 2) = "H"
+a(4, 3) = "I"
+a(4, 4) = "R"
+a(4, 5) = "R"
+a(4, 6) = "Z"
+a(4, 7) = "Z"
+a(4, 8) = "P"
+a(4, 9) = "S"
+a(5, 1) = "B"
+a(5, 2) = "B"
+a(5, 3) = "L"
+a(5, 4) = "S"
+a(5, 5) = "F"
+a(5, 6) = "Q"
+a(5, 7) = "N"
+a(5, 8) = "J"
+a(5, 9) = "Y"
+a(6, 1) = "H"
+a(6, 2) = "F"
+a(6, 3) = "F"
+a(6, 4) = "Y"
+a(6, 5) = "B"
+a(6, 6) = "W"
+a(6, 7) = "T"
+a(6, 8) = "N"
+a(6, 9) = "P"
+End Sub
+Public Sub operate(operate_char)    '操作公式
+Select Case operate_char
+Case "R": r
+Case "L": l
+Case "F": f
+Case "B": b
+Case "U": u
+Case "D": d
+Case "R2": r2
+Case "L2": l2
+Case "F2": f2
+Case "B2": b2
+Case "U2": u2
+Case "D2": d2
+Case "R'": ri
+Case "L'": li
+Case "F'": fi
+Case "B'": bi
+Case "U'": ui
+Case "D'": di
+Case "x": x
+Case "x2": x2
+Case "x'": xi
+Case "y": y
+Case "y2": y2
+Case "y'": yi
+Case "z": z
+Case "z2": z2
+Case "z'": zi
+Case "r": xr
+Case "r2": xr2
+Case "r'": xri
+Case "f": xf
+Case "f2": xf2
+Case "f'": xfi
+Case "u": xu
+Case "u2": xu2
+Case "u'": xui
+Case "d": xd
+Case "d2": xd2
+Case "d'": xdi
+Case "l": xl
+Case "l2": xl2
+Case "l'": xli
+Case "b": xb
+Case "b2": xb2
+Case "b'": xbi
+Case "S": s
+Case "S2": s2
+Case "S'": si
+Case "M": m
+Case "M2": m2
+Case "M'": mi
+Case "E": e
+Case "E2": e2
+Case "E'": ei
+'Case Else: 不知道
+End Select
+End Sub
+Function track1(track1_s1 As String) As String        '棱块编码追踪
+Select Case track1_s1
+Case "A": track1 = a(1, 8)
+Case "B": track1 = a(5, 2)
+Case "C": track1 = a(1, 4)
+Case "D": track1 = a(3, 2)
+Case "E": track1 = a(1, 2)
+Case "F": track1 = a(6, 2)
+Case "G": track1 = a(1, 6)
+Case "H": track1 = a(4, 2)
+Case "I": track1 = a(2, 2)
+Case "J": track1 = a(5, 8)
+Case "K": track1 = a(2, 4)
+Case "L": track1 = a(3, 8)
+Case "M": track1 = a(2, 8)
+Case "N": track1 = a(6, 8)
+Case "O": track1 = a(2, 6)
+Case "P": track1 = a(4, 8)
+Case "Q": track1 = a(5, 6)
+Case "R": track1 = a(4, 4)
+Case "S": track1 = a(5, 4)
+Case "T": track1 = a(3, 6)
+Case "W": track1 = a(6, 6)
+Case "X": track1 = a(3, 4)
+Case "Y": track1 = a(6, 4)
+Case "Z": track1 = a(4, 6)
+End Select
+End Function
+Function track2(track2_s1 As String) As String          '角块编码追踪
+Select Case track2_s1
+Case "A": track2 = a(1, 7)
+Case "B": track2 = a(5, 1)
+Case "C": track2 = a(3, 3)
+Case "D": track2 = a(1, 1)
+Case "E": track2 = a(3, 1)
+Case "F": track2 = a(6, 3)
+Case "G": track2 = a(1, 3)
+Case "H": track2 = a(6, 1)
+Case "I": track2 = a(4, 3)
+Case "J": track2 = a(1, 9)
+Case "K": track2 = a(4, 1)
+Case "L": track2 = a(5, 3)
+Case "W": track2 = a(2, 1)
+Case "M": track2 = a(3, 9)
+Case "N": track2 = a(5, 7)
+Case "O": track2 = a(2, 7)
+Case "P": track2 = a(6, 9)
+Case "Q": track2 = a(3, 7)
+Case "R": track2 = a(2, 9)
+Case "S": track2 = a(4, 9)
+Case "T": track2 = a(6, 7)
+Case "X": track2 = a(2, 3)
+Case "Y": track2 = a(5, 9)
+Case "Z": track2 = a(4, 7)
+End Select
+End Function
+Function edge(s1 As String, buffer As String)
+Dim edge_char1, edge_char2 As String
+Dim arr
+initialize
+arr = Split(s1, " ")
+For i = 0 To UBound(arr)
+Call operate(arr(i))
+Next i
+If ((Len(edgefull(s1)) = 4) And (cornerfull(s1) = "")) Then
+edge_char2 = track1(buffer)
+edge_char1 = track1(edge_char2)
+edge = edge_char1 & edge_char2
+End If
+End Function
+Function corner(s1 As String, buffer As String)
+Dim corner_char1, corner_char2 As String
+Dim arr
+initialize
+arr = Split(s1, " ")
+For i = 0 To UBound(arr)
+Call operate(arr(i))
+Next i
+If (Len(cornerfull(s1)) = 4 And (edgefull(s1) = "")) Then
+corner_char2 = track2(buffer)
+corner_char1 = track2(corner_char2)
+corner = corner_char1 & corner_char2
+End If
+End Function
+Public Sub edgepart(edgepart_s1 As String)
+Dim edgepart_char As String
+edgepart_char = edgepart_s1
+While track1(Right(edgepart_char, 1)) <> Left(edgepart_char, 1)
+edgepart_char = edgepart_char & track1(Right(edgepart_char, 1))
+Wend
+If edgepart_char <> edgepart_s1 Then
+edgefull_char = edgefull_char & edgepart_char & edgepart_s1
+End If
+End Sub
+Function edgefull(s1 As String)
+Dim arr
+initialize
+edge_ch(1) = "A"
+edge_ch(2) = "B"
+edge_ch(3) = "C"
+edge_ch(4) = "D"
+edge_ch(5) = "E"
+edge_ch(6) = "F"
+edge_ch(7) = "G"
+edge_ch(8) = "H"
+edge_ch(9) = "I"
+edge_ch(10) = "J"
+edge_ch(11) = "K"
+edge_ch(12) = "L"
+edge_ch(13) = "M"
+edge_ch(14) = "N"
+edge_ch(15) = "O"
+edge_ch(16) = "P"
+edge_ch(17) = "Q"
+edge_ch(18) = "R"
+edge_ch(19) = "S"
+edge_ch(20) = "T"
+edge_ch(21) = "W"
+edge_ch(22) = "X"
+edge_ch(23) = "Y"
+edge_ch(24) = "Z"
+edgefull_char = ""
+arr = Split(s1, " ")
+For i = 0 To UBound(arr)
+Call operate(arr(i))
+Next i
+For i = 1 To 24 Step 2
+If Not ((InStr(edgefull_char, edge_ch(i)) > 0) Or (InStr(edgefull_char, edge_ch(i + 1)) > 0)) Then
+Call edgepart(edge_ch(i))
+End If
+Next i
+edgefull = edgefull_char
+End Function
+Public Sub cornerpart(cornerpart_s1 As String)
+Dim cornerpart_char As String
+cornerpart_char = cornerpart_s1
+While track2(Right(cornerpart_char, 1)) <> Left(cornerpart_char, 1)
+cornerpart_char = cornerpart_char & track2(Right(cornerpart_char, 1))
+Wend
+If cornerpart_char <> cornerpart_s1 Then
+cornerfull_char = cornerfull_char & cornerpart_char & cornerpart_s1
+End If
+End Sub
+Function cornerfull(s1 As String)
+Dim arr
+initialize
+corner_ch(1) = "A"
+corner_ch(2) = "B"
+corner_ch(3) = "C"
+corner_ch(4) = "D"
+corner_ch(5) = "E"
+corner_ch(6) = "F"
+corner_ch(7) = "G"
+corner_ch(8) = "H"
+corner_ch(9) = "I"
+corner_ch(10) = "J"
+corner_ch(11) = "K"
+corner_ch(12) = "L"
+corner_ch(13) = "W"
+corner_ch(14) = "M"
+corner_ch(15) = "N"
+corner_ch(16) = "O"
+corner_ch(17) = "P"
+corner_ch(18) = "Q"
+corner_ch(19) = "R"
+corner_ch(20) = "S"
+corner_ch(21) = "T"
+corner_ch(22) = "X"
+corner_ch(23) = "Y"
+corner_ch(24) = "Z"
+cornerfull_char = ""
+arr = Split(s1, " ")
+For i = 0 To UBound(arr)
+Call operate(arr(i))
+Next i
+For i = 1 To 24 Step 3
+If Not ((InStr(cornerfull_char, corner_ch(i)) > 0) Or (InStr(cornerfull_char, corner_ch(i + 1)) > 0) Or (InStr(cornerfull_char, corner_ch(i + 2)) > 0)) Then
+Call cornerpart(corner_ch(i))
+End If
+Next i
+cornerfull = cornerfull_char
+End Function
+'以下是专门性组件
+Sub mirror()
+ Range("A1:Z1000").Select
+    Selection.Replace What:="U'", Replacement:="q", MatchCase:=True
+    Selection.Replace What:="U", Replacement:="U'", MatchCase:=True
+    Selection.Replace What:="q", Replacement:="U", MatchCase:=True
+    Selection.Replace What:="U'2", Replacement:="U2", MatchCase:=True
+    Selection.Replace What:="R'", Replacement:="q", MatchCase:=True
+    Selection.Replace What:="R", Replacement:="R'", MatchCase:=True
+    Selection.Replace What:="q", Replacement:="R", MatchCase:=True
+    Selection.Replace What:="R'2", Replacement:="R2", MatchCase:=True
+    Selection.Replace What:="D'", Replacement:="q", MatchCase:=True
+    Selection.Replace What:="D", Replacement:="D'", MatchCase:=True
+    Selection.Replace What:="q", Replacement:="D", MatchCase:=True
+    Selection.Replace What:="D'2", Replacement:="D2", MatchCase:=True
+    Selection.Replace What:="F'", Replacement:="q", MatchCase:=True
+    Selection.Replace What:="F", Replacement:="p", MatchCase:=True
+    Selection.Replace What:="B'", Replacement:="F", MatchCase:=True
+    Selection.Replace What:="B", Replacement:="F'", MatchCase:=True
+    Selection.Replace What:="q", Replacement:="B", MatchCase:=True
+    Selection.Replace What:="p", Replacement:="B'", MatchCase:=True
+    Selection.Replace What:="F'2", Replacement:="F2", MatchCase:=True
+    Selection.Replace What:="B'2", Replacement:="B2", MatchCase:=True
+    Selection.Replace What:="E'", Replacement:="q", MatchCase:=True
+    Selection.Replace What:="E", Replacement:="E'", MatchCase:=True
+    Selection.Replace What:="q", Replacement:="E", MatchCase:=True
+    Selection.Replace What:="E'2", Replacement:="E2", MatchCase:=True
+    Selection.Replace What:="M'", Replacement:="q", MatchCase:=True
+    Selection.Replace What:="M", Replacement:="M'", MatchCase:=True
+    Selection.Replace What:="q", Replacement:="M", MatchCase:=True
+    Selection.Replace What:="M'2", Replacement:="M2", MatchCase:=True
+    Selection.Replace What:="r'", Replacement:="q", MatchCase:=True
+    Selection.Replace What:="r", Replacement:="r'", MatchCase:=True
+    Selection.Replace What:="q", Replacement:="r", MatchCase:=True
+    Selection.Replace What:="r'2", Replacement:="r2", MatchCase:=True
+    Selection.Replace What:="u'", Replacement:="q", MatchCase:=True
+    Selection.Replace What:="u", Replacement:="u'", MatchCase:=True
+    Selection.Replace What:="q", Replacement:="u", MatchCase:=True
+    Selection.Replace What:="u'2", Replacement:="u2", MatchCase:=True
+End Sub
+Sub 批量增加批注_角()
+On Error Resume Next
+Application.ScreenUpdating = False
+Application.Calculation = xlCalculationManual
+Dim i As Integer, j As Integer
+For i = 1 To 126
+For YY = 2 To 6 Step 2
+With Cells(i, YY)
+.AddComment
+.Comment.Visible = False
+.Comment.Text Text:=Sheet6.Cells(i, YY).Value
+End With
+Next
+Next
+ For i = 1 To 126
+    With Cells(i, 2).Comment
+         .Shape.TextFrame.Characters.Font.Bold = False
+         .Shape.TextFrame.Characters.Font.Size = 14
+         .Shape.TextFrame.Characters.Font.Name = "Tahoma"
+         .Shape.TextFrame.AutoSize = True
+          .Visible = False
+        End With
+    With Cells(i, 4).Comment
+         .Shape.TextFrame.Characters.Font.Bold = False
+         .Shape.TextFrame.Characters.Font.Size = 14
+         .Shape.TextFrame.Characters.Font.Name = "Tahoma"
+         .Shape.TextFrame.AutoSize = True
+          .Visible = False
+    End With
+     With Cells(i, 6).Comment
+         .Shape.TextFrame.Characters.Font.Bold = False
+         .Shape.TextFrame.Characters.Font.Size = 14
+         .Shape.TextFrame.Characters.Font.Name = "Tahoma"
+         .Shape.TextFrame.AutoSize = True
+          .Visible = False
+    End With
+Next i
+iApplication.Calculation = xlCalculationAutomatic '自动重算
+Application.ScreenUpdating = True '打开屏幕刷新
+On Error GoTo 0 '恢复正常的错误提示
+End Sub
+Sub 批量增加批注_棱()
+On Error Resume Next '忽略错误继续执行VBA代码,避免出现错误消息
+Application.ScreenUpdating = False '关闭屏幕刷新
+Application.Calculation = xlCalculationManual '手动重算
+Dim i As Integer, j As Integer
+For i = 1 To 220
+For YY = 2 To 4 Step 2
+With Cells(i, YY)
+.AddComment
+.Comment.Visible = False
+.Comment.Text Text:=Sheet12.Cells(i, YY).Value
+End With
+Next
+Next
+ For i = 1 To 220
+    With Cells(i, 2).Comment
+         .Shape.TextFrame.Characters.Font.Bold = False
+         .Shape.TextFrame.Characters.Font.Size = 14
+         .Shape.TextFrame.Characters.Font.Name = "Tahoma"
+         .Shape.TextFrame.AutoSize = True
+          .Visible = False
+        End With
+      With Cells(i, 4).Comment
+         .Shape.TextFrame.Characters.Font.Bold = False
+         .Shape.TextFrame.Characters.Font.Size = 14
+         .Shape.TextFrame.Characters.Font.Name = "Tahoma"
+         .Shape.TextFrame.AutoSize = True
+          .Visible = False
+    End With
+Next i
+iApplication.Calculation = xlCalculationAutomatic '自动重算
+Application.ScreenUpdating = True '打开屏幕刷新
+On Error GoTo 0 '恢复正常的错误提示
+End Sub
+ Function Getcmt(Rng As Range)
+    If Rng.Comment Is Nothing Then Getcmt = "": Exit Function
+    Getcmt = Rng.Comment.Text
+End Function
+Sub website()
+On Error Resume Next '忽略错误继续执行VBA代码,避免出现错误消息
+Application.ScreenUpdating = False '关闭屏幕刷新
+Application.Calculation = xlCalculationManual '手动重算
+With ActiveSheet.QueryTables.Add(Connection:= _
+"URL;http://127.0.0.1:8081/?bdrfuululululrddrubbflfbdbbfdrrdbdurlrudlffurfrdfblbfl", Destination:=Range("$A$1"))
+.WebSelectionType = xlEntirePage
+.Refresh BackgroundQuery:=False
+End With
+iApplication.Calculation = xlCalculationAutomatic '自动重算
+Application.ScreenUpdating = True '打开屏幕刷新
+On Error GoTo 0 '恢复正常的错误提示
+End Sub
+Private Function min(one As Integer, two As Integer, three As Integer)
+    min = one
+    If (two < min) Then
+     min = two
+    End If
+    If (three < min) Then
+     min = three
+    End If
+End Function
+ 
+Private Function ld(str1 As String, str2 As String)
+Dim n, m, i, j As Integer
+Dim ch1, ch2 As String
+    n = Len(str1)
+    m = Len(str2)
+    Dim temp As Integer
+    If (n = 0) Then
+        ld = m
+    End If
+    If (m = 0) Then
+        ld = n
+    End If
+Dim d As Variant
+ReDim d(n + 1, m + 1) As Variant
+    For i = 0 To n
+        d(i, 0) = i
+    Next i
+    For j = 0 To m
+        d(0, j) = j
+    Next j
+    For i = 1 To n
+        ch1 = Mid(str1, i, 1)
+        For j = 1 To m
+            ch2 = Mid(str2, j, 1)
+            If (ch1 = ch2) Then
+            temp = 0
+            Else
+                temp = 1
+            End If
+            d(i, j) = min(d(i - 1, j) + 1, d(i, j - 1) + 1, d(i - 1, j - 1) + temp)
+        Next j
+    Next i
+    ld = d(n, m)
+End Function
+ 
+Public Function sim(str1 As String, str2 As String)
+    Dim ldint As Integer
+    ldint = ld(str1, str2)
+    Dim strlen As Integer
+    If (Len(str1) >= Len(str2)) Then
+        strlen = Len(str1)
+    Else
+        strlen = Len(str2)
+    End If
+    sim = 1 - ldint / strlen
+End Function
+Function kongxue_edge(kongxue_edge_s1 As String, kongxue_edge_s2 As String)
+Dim arr
+Dim arr1
+Dim arr2
+Dim kongxue_edge1 As String
+Dim kongxue_edge2 As String
+initialize
+edge_ch(1) = "A"
+edge_ch(2) = "B"
+edge_ch(3) = "C"
+edge_ch(4) = "D"
+edge_ch(5) = "E"
+edge_ch(6) = "F"
+edge_ch(7) = "G"
+edge_ch(8) = "H"
+edge_ch(9) = "I"
+edge_ch(10) = "J"
+edge_ch(11) = "K"
+edge_ch(12) = "L"
+edge_ch(13) = "M"
+edge_ch(14) = "N"
+edge_ch(15) = "O"
+edge_ch(16) = "P"
+edge_ch(17) = "Q"
+edge_ch(18) = "R"
+edge_ch(19) = "S"
+edge_ch(20) = "T"
+edge_ch(21) = "W"
+edge_ch(22) = "X"
+edge_ch(23) = "Y"
+edge_ch(24) = "Z"
+kongxue_edge_ch(1) = "UF"
+kongxue_edge_ch(2) = "B"
+kongxue_edge_ch(3) = "UL"
+kongxue_edge_ch(4) = "D"
+kongxue_edge_ch(5) = "UB"
+kongxue_edge_ch(6) = "F"
+kongxue_edge_ch(7) = "UR"
+kongxue_edge_ch(8) = "H"
+kongxue_edge_ch(9) = "DF"
+kongxue_edge_ch(10) = "J"
+kongxue_edge_ch(11) = "DL"
+kongxue_edge_ch(12) = "L"
+kongxue_edge_ch(13) = "DB"
+kongxue_edge_ch(14) = "N"
+kongxue_edge_ch(15) = "DR"
+kongxue_edge_ch(16) = "P"
+kongxue_edge_ch(17) = "FR"
+kongxue_edge_ch(18) = "R"
+kongxue_edge_ch(19) = "FL"
+kongxue_edge_ch(20) = "T"
+kongxue_edge_ch(21) = "BL"
+kongxue_edge_ch(22) = "X"
+kongxue_edge_ch(23) = "BR"
+kongxue_edge_ch(24) = "Z"
+arr1 = ""
+arr = Split(kongxue_edge_s1, " ")
+For i = 0 To UBound(arr)
+Call operate(arr(i))
+Next i
+For i = 1 To 24 Step 2
+If (track1(edge_ch(i)) <> edge_ch(i)) Then
+arr1 = arr1 & kongxue_edge_ch(i) & " "
+End If
+Next i
+kongxue_edge1 = arr1
+initialize
+arr2 = ""
+arr = Split(kongxue_edge_s2, " ")
+For i = 0 To UBound(arr)
+Call operate(arr(i))
+Next i
+For i = 1 To 24 Step 2
+If (track1(edge_ch(i)) <> edge_ch(i)) Then
+arr2 = arr2 & kongxue_edge_ch(i) & " "
+End If
+Next i
+kongxue_edge2 = arr2
+kongxue_edge = same(kongxue_edge1, kongxue_edge2)
+End Function
+Function kongxue_corner(kongxue_corner_s1 As String, kongxue_corner_s2 As String)
+Dim arr
+Dim arr1
+Dim arr2
+Dim kongxue_corner1 As String
+Dim kongxue_corner2 As String
+initialize
+corner_ch(1) = "A"
+corner_ch(2) = "B"
+corner_ch(3) = "C"
+corner_ch(4) = "D"
+corner_ch(5) = "E"
+corner_ch(6) = "F"
+corner_ch(7) = "G"
+corner_ch(8) = "H"
+corner_ch(9) = "I"
+corner_ch(10) = "J"
+corner_ch(11) = "K"
+corner_ch(12) = "L"
+corner_ch(13) = "W"
+corner_ch(14) = "M"
+corner_ch(15) = "N"
+corner_ch(16) = "O"
+corner_ch(17) = "P"
+corner_ch(18) = "Q"
+corner_ch(19) = "R"
+corner_ch(20) = "S"
+corner_ch(21) = "T"
+corner_ch(22) = "X"
+corner_ch(23) = "Y"
+corner_ch(24) = "Z"
+kongxue_corner_ch(1) = "UFL"
+kongxue_corner_ch(2) = "B"
+kongxue_corner_ch(3) = "C"
+kongxue_corner_ch(4) = "UBL"
+kongxue_corner_ch(5) = "E"
+kongxue_corner_ch(6) = "F"
+kongxue_corner_ch(7) = "UBR"
+kongxue_corner_ch(8) = "H"
+kongxue_corner_ch(9) = "I"
+kongxue_corner_ch(10) = "UFR"
+kongxue_corner_ch(11) = "K"
+kongxue_corner_ch(12) = "L"
+kongxue_corner_ch(13) = "DFL"
+kongxue_corner_ch(14) = "M"
+kongxue_corner_ch(15) = "N"
+kongxue_corner_ch(16) = "DBL"
+kongxue_corner_ch(17) = "P"
+kongxue_corner_ch(18) = "Q"
+kongxue_corner_ch(19) = "DBR"
+kongxue_corner_ch(20) = "S"
+kongxue_corner_ch(21) = "T"
+kongxue_corner_ch(22) = "DFR"
+kongxue_corner_ch(23) = "Y"
+kongxue_corner_ch(24) = "Z"
+arr1 = ""
+arr = Split(kongxue_corner_s1, " ")
+For i = 0 To UBound(arr)
+Call operate(arr(i))
+Next i
+For i = 1 To 24 Step 3
+If (track2(corner_ch(i)) <> corner_ch(i)) Then
+arr1 = arr1 & kongxue_corner_ch(i) & " "
+End If
+Next i
+kongxue_corner1 = arr1
+initialize
+arr2 = ""
+arr = Split(kongxue_corner_s2, " ")
+For i = 0 To UBound(arr)
+Call operate(arr(i))
+Next i
+For i = 1 To 24 Step 3
+If (track2(corner_ch(i)) <> corner_ch(i)) Then
+arr2 = arr2 & kongxue_corner_ch(i) & " "
+End If
+Next i
+kongxue_corner2 = arr2
+kongxue_corner = same(kongxue_corner1, kongxue_corner2)
+End Function
+Function same(same_s1 As String, same_s2 As String)
+Dim same_c()
+same_a = Split(same_s1, " ")
+same_b = Split(same_s2, " ")
+For i = 0 To UBound(same_a)
+   For j = 0 To UBound(same_b)
+     If same_a(i) = same_b(j) Then
+        n = n + 1
+        ReDim Preserve same_c(1 To n)
+        same_c(n) = same_b(j)
+        GoTo 1000
+    End If
+    Next j
+1000:
+    Next i
+same = Join(same_c, " ")
+End Function
+Function odd(odd_s1 As String)
+initialize
+arr = Split(odd_s1, " ")
+For i = 0 To UBound(arr)
+Call operate(arr(i))
+Next i
+End Function
+Public Function correlation(correlation_s1, correlation_s2)
+If Mid(correlation_s1, 1, 1) = Mid(correlation_s2, 1, 1) Then                         '对应于U U2情况
+correlation = 1: Exit Function
+End If
+If ((Mid(correlation_s1, 1, 1) = "U") And ((Mid(correlation_s2, 1, 1) = "D") Or (Mid(correlation_s2, 1, 1) = "E"))) Then    '对应于U D U2情况
+correlation = 2: Exit Function
+End If
+If ((Mid(correlation_s1, 1, 1) = "D") And ((Mid(correlation_s2, 1, 1) = "U") Or (Mid(correlation_s2, 1, 1) = "E"))) Then
+correlation = 2: Exit Function
+End If
+If ((Mid(correlation_s1, 1, 1) = "E") And ((Mid(correlation_s2, 1, 1) = "D") Or (Mid(correlation_s2, 1, 1) = "U"))) Then
+correlation = 2: Exit Function
+End If
+If ((Mid(correlation_s1, 1, 1) = "R") And ((Mid(correlation_s2, 1, 1) = "L") Or (Mid(correlation_s2, 1, 1) = "M"))) Then
+correlation = 2: Exit Function
+End If
+If ((Mid(correlation_s1, 1, 1) = "L") And ((Mid(correlation_s2, 1, 1) = "R") Or (Mid(correlation_s2, 1, 1) = "M"))) Then
+correlation = 2: Exit Function
+End If
+If ((Mid(correlation_s1, 1, 1) = "M") And ((Mid(correlation_s2, 1, 1) = "L") Or (Mid(correlation_s2, 1, 1) = "R"))) Then
+correlation = 2: Exit Function
+End If
+If ((Mid(correlation_s1, 1, 1) = "F") And ((Mid(correlation_s2, 1, 1) = "B") Or (Mid(correlation_s2, 1, 1) = "S"))) Then
+correlation = 2: Exit Function
+End If
+If ((Mid(correlation_s1, 1, 1) = "B") And ((Mid(correlation_s2, 1, 1) = "F") Or (Mid(correlation_s2, 1, 1) = "S"))) Then
+correlation = 2: Exit Function
+End If
+If ((Mid(correlation_s1, 1, 1) = "S") And ((Mid(correlation_s2, 1, 1) = "B") Or (Mid(correlation_s2, 1, 1) = "F"))) Then
+correlation = 2: Exit Function
+End If
+End Function
+Public Function complicatepart(s1 As String)
+If s1 = "" Then
+complicatepart = ""
+Exit Function
+End If
+s1 = s1 & " "
+s1 = Replace(s1, ":", " :", , , vbBinaryCompare)
+s1 = Replace(s1, "R M' ", "r ", , , vbBinaryCompare)
+s1 = Replace(s1, "R' M ", "r' ", , , vbBinaryCompare)
+s1 = Replace(s1, "R2 M2 ", "r2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "L M ", "l ", , , vbBinaryCompare)
+s1 = Replace(s1, "L' M' ", "l' ", , , vbBinaryCompare)
+s1 = Replace(s1, "L2 M2 ", "l2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "F S ", "f ", , , vbBinaryCompare)
+s1 = Replace(s1, "F' S' ", "f' ", , , vbBinaryCompare)
+s1 = Replace(s1, "F2 S2 ", "f2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "B S' ", "b ", , , vbBinaryCompare)
+s1 = Replace(s1, "B' S ", "b' ", , , vbBinaryCompare)
+s1 = Replace(s1, "B2 S2 ", "b2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "U E' ", "u ", , , vbBinaryCompare)
+s1 = Replace(s1, "U' E ", "u' ", , , vbBinaryCompare)
+s1 = Replace(s1, "U2 E2 ", "u2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "D E ", "d ", , , vbBinaryCompare)
+s1 = Replace(s1, "D' E' ", "d' ", , , vbBinaryCompare)
+s1 = Replace(s1, "D2 E2 ", "d2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "M' R ", "r ", , , vbBinaryCompare)
+s1 = Replace(s1, "M R'", "r' ", , , vbBinaryCompare)
+s1 = Replace(s1, "M2 R2 ", "r2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "M L ", "l ", , , vbBinaryCompare)
+s1 = Replace(s1, "M' L' ", "l' ", , , vbBinaryCompare)
+s1 = Replace(s1, "M2 L2 ", "l2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "S F ", "f ", , , vbBinaryCompare)
+s1 = Replace(s1, "S' F' ", "f' ", , , vbBinaryCompare)
+s1 = Replace(s1, "S2 F2 ", "f2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "S' B ", "b ", , , vbBinaryCompare)
+s1 = Replace(s1, "S B' ", "b' ", , , vbBinaryCompare)
+s1 = Replace(s1, "S2 B2 ", "b2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "E' U ", "u ", , , vbBinaryCompare)
+s1 = Replace(s1, "E U' ", "u' ", , , vbBinaryCompare)
+s1 = Replace(s1, "E2 U2 ", "u2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "E D ", "d ", , , vbBinaryCompare)
+s1 = Replace(s1, "E' D' ", "d' ", , , vbBinaryCompare)
+s1 = Replace(s1, "E2 D2 ", "d2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "R M2 ", "r M' ", , , vbBinaryCompare)
+s1 = Replace(s1, "R' M2 ", "r' M ", , , vbBinaryCompare)
+s1 = Replace(s1, " :", ":", , , vbBinaryCompare)
+s1 = Mid(s1, 1, Len(s1) - 1)
+complicatepart = s1
+End Function
+Function complicate(s1 As String) As String
+Dim arr
+Dim simplify1 As String
+Dim temp_s1
+Dim count As Long
+temp_s1 = ""
+For count = 1 To 20
+s1 = complicatepart(s1)
+If temp_s1 = s1 Then
+Exit For
+End If
+temp_s1 = s1
+Next count
+complicate = s1
+End Function
+Public Function simplifypart(s1 As String)
+Dim arr
+Dim temp As String
+If s1 = "" Then
+simplifypart = ""
+Exit Function
+End If
+s1 = s1 & " "
+s1 = Replace(s1, "r ", "R M' ", , , vbBinaryCompare)
+s1 = Replace(s1, "r' ", "R' M ", , , vbBinaryCompare)
+s1 = Replace(s1, "r2 ", "R2 M2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "l ", "L M ", , , vbBinaryCompare)
+s1 = Replace(s1, "l' ", "L' M' ", , , vbBinaryCompare)
+s1 = Replace(s1, "l2 ", "L2 M2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "f ", "F S ", , , vbBinaryCompare)
+s1 = Replace(s1, "f' ", "F' S' ", , , vbBinaryCompare)
+s1 = Replace(s1, "f2 ", "F2 S2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "b ", "B S' ", , , vbBinaryCompare)
+s1 = Replace(s1, "b' ", "B' S ", , , vbBinaryCompare)
+s1 = Replace(s1, "b2 ", "B2 S2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "u ", "U E' ", , , vbBinaryCompare)
+s1 = Replace(s1, "u' ", "U' E ", , , vbBinaryCompare)
+s1 = Replace(s1, "u2 ", "U2 E2 ", , , vbBinaryCompare)
+s1 = Replace(s1, "d ", "D E ", , , vbBinaryCompare)
+s1 = Replace(s1, "d' ", "D' E' ", , , vbBinaryCompare)
+s1 = Replace(s1, "d2 ", "D2 E2 ", , , vbBinaryCompare)
+s1 = Mid(s1, 1, Len(s1))
+arr = Split(s1, " ")
+For i = 0 To UBound(arr) - 2
+If ((correlation(arr(i), arr(i + 2)) = 1) And (correlation(arr(i), arr(i + 1)) = 2) And (correlation(arr(i + 1), arr(i + 2)) = 2)) Then
+arr(i) = arr(i) & " " & arr(i + 2): arr(i + 2) = ""
+End If
+Next i
+s1 = ""
+For i = 0 To UBound(arr)
+If arr(i) <> "" Then
+s1 = s1 & arr(i) & " "
+End If
+Next i
+s1 = Mid(s1, 1, Len(s1) - 1)
+For i = 0 To UBound(arr) - 1
+If correlation(arr(i), arr(i + 1)) = 1 Then
+If ((Len(arr(i)) = 1) And (Len(arr(i + 1)) = 1)) Then
+arr(i) = arr(i) & "2": arr(i + 1) = ""
+End If
+If ((Len(arr(i)) = 1) And (Mid(arr(i + 1), 2, 1) = "2")) Then
+arr(i) = arr(i) & "'": arr(i + 1) = ""
+End If
+If ((Len(arr(i)) = 1) And (Mid(arr(i + 1), 2, 1) = "'")) Then
+arr(i) = "": arr(i + 1) = ""
+End If
+If ((Mid(arr(i), 2, 1) = "2") And (Len(arr(i + 1)) = 1)) Then
+arr(i) = Mid(arr(i), 1, 1) & "'": arr(i + 1) = ""
+End If
+If ((Mid(arr(i), 2, 1) = "2") And (Mid(arr(i + 1), 2, 1) = "2")) Then
+arr(i) = "": arr(i + 1) = ""
+End If
+If ((Mid(arr(i), 2, 1) = "2") And (Mid(arr(i + 1), 2, 1) = "'")) Then
+arr(i) = Mid(arr(i), 1, 1): arr(i + 1) = ""
+End If
+If ((Mid(arr(i), 2, 1) = "'") And (Len(arr(i + 1)) = 1)) Then
+arr(i) = "": arr(i + 1) = ""
+End If
+If ((Mid(arr(i), 2, 1) = "'") And (Mid(arr(i + 1), 2, 1) = "2")) Then
+arr(i) = Mid(arr(i), 1, 1): arr(i + 1) = ""
+End If
+If ((Mid(arr(i), 2, 1) = "'") And (Mid(arr(i + 1), 2, 1) = "'")) Then
+arr(i) = Mid(arr(i), 1, 1) & "2": arr(i + 1) = "":
+End If
+End If
+Next i
+s1 = ""
+For i = 0 To UBound(arr)
+If arr(i) <> "" Then
+s1 = s1 & arr(i) & " "
+End If
+Next i
+If s1 <> "" Then
+s1 = Mid(s1, 1, Len(s1) - 1)
+End If
+simplifypart = s1
+End Function
+Function simplify(s1 As String) As String
+Dim arr
+Dim simplify1 As String
+Dim temp_s1
+Dim count As Long
+temp_s1 = ""
+For count = 1 To 20
+s1 = simplifypart(s1)
+If temp_s1 = s1 Then
+Exit For
+End If
+temp_s1 = s1
+Next count
+simplify = s1
+End Function
+Function combine(combine_s1, combine_s2) As String
+If ((combine_s1 <> "") And (combine_s2 <> "")) Then
+combine = combine_s1 & " " & combine_s2
+End If
+If ((combine_s1 = "") And (combine_s2 <> "")) Then
+combine = combine_s2
+End If
+If ((combine_s1 <> "") And (combine_s2 = "")) Then
+combine = combine_s1
+End If
+If ((combine_s1 = "") And (combine_s2 = "")) Then
+combine = ""
+End If
+End Function
+Sub commutator_part0(s1 As String)              '基础转换机[R D' R',U']
+Dim arr
+Dim commutator_part0_char1 As String
+Dim commutator_part0_char2 As String
+Dim commutator_part0_char3 As String
+Dim commutator_part0_char4 As String
+arr = Split(s1, " ")
+commutator_part0_char1_out = ""
+commutator_part0_char2_out = ""
+If (UBound(arr) Mod 2 = 1) Then
+half = (UBound(arr) + 1) / 2
+For i = 0 To half - 2
+commutator_part0_char1 = ""
+commutator_part0_char3 = ""
+commutator_part0_char2 = ""
+commutator_part0_char4 = ""
+For j = 0 To i
+commutator_part0_char1 = commutator_part0_char1 & arr(j) & " "
+Next j
+For j = i + 1 To half - 1
+commutator_part0_char2 = commutator_part0_char2 & arr(j) & " "
+Next j
+For j = half To half + i
+commutator_part0_char3 = commutator_part0_char3 & arr(j) & " "
+Next j
+For j = half + i + 1 To UBound(arr)
+commutator_part0_char4 = commutator_part0_char4 & arr(j) & " "
+Next j
+commutator_part0_char1 = Mid(commutator_part0_char1, 1, Len(commutator_part0_char1) - 1)
+commutator_part0_char2 = Mid(commutator_part0_char2, 1, Len(commutator_part0_char2) - 1)
+commutator_part0_char3 = Mid(commutator_part0_char3, 1, Len(commutator_part0_char3) - 1)
+commutator_part0_char4 = Mid(commutator_part0_char4, 1, Len(commutator_part0_char4) - 1)
+If ((simplify(combine(commutator_part0_char1, commutator_part0_char3)) = "") And (simplify(combine(commutator_part0_char2, commutator_part0_char4)) = "")) Then
+commutator_part0_char1_out = commutator_part0_char1
+commutator_part0_char2_out = commutator_part0_char2
+Exit Sub
+End If
+Next i
+End If
+End Sub
+Sub commutator_part1(s1 As String)         '处理含有set up的转换机
+Dim arr
+Dim arr1
+Dim commutator_part1_char1 As String
+Dim commutator_part1_char2 As String
+Dim commutator_part1_temp As String
+Dim commutator_part1_charfull As String
+commutator_part1_char0_out = ""
+commutator_part1_char1_out = ""
+commutator_part1_char2_out = ""
+commutator_part0 (s1)
+If commutator_part0_char1_out <> "" Then
+commutator_part1_char0_out = commutator_part0_char0_out
+commutator_part1_char1_out = commutator_part0_char1_out
+commutator_part1_char2_out = commutator_part0_char2_out
+Exit Sub
+End If
+arr = Split(s1, " ")
+If UBound(arr) <= 2 Then
+commutator_part1_char0_out = ""
+commutator_part1_char1_out = ""
+commutator_part1_char2_out = ""
+Exit Sub
+End If
+half = (UBound(arr) + 1) / 2
+commutator_part1_char1 = ""
+For i = 0 To half
+commutator_part1_char2 = ""
+'处理  R2 D R' U2 R D' R' U2 R' 的情况   (已完成)
+' R (R D R' U2 R D' R' U2) R' 
+If commutator_part1_charfull = "" Then
+commutator_part1_charfull = s1
+End If
+arr1 = Split(commutator_part1_charfull, " ")
+commutator_part1_temp = ""
+If (correlation(arr1(UBound(arr1)), arr(i)) = 1 And Mid(arr(i), 2) = "2" And Mid(arr1(UBound(arr1)), 2) <> "2") Then
+If commutator_part1_charfull = "" Then
+commutator_part1_charfull = s1
+End If
+arr1 = Split(commutator_part1_charfull, " ")
+commutator_part1_temp = ""
+arr(i) = combine(inverse_one(arr1(UBound(arr1))), inverse_one(arr1(UBound(arr1))))
+For j = 0 To UBound(arr)
+commutator_part1_temp = commutator_part1_temp & arr(j) & " "
+Next j
+commutator_part1_temp = Mid(commutator_part1_temp, 1, Len(commutator_part1_temp) - 1)
+arr = Split(commutator_part1_temp, " ")
+half = (UBound(arr) + 1) / 2
+End If              'case结束
+commutator_part1_char1 = commutator_part1_char1 & " " & arr(i)
+If Mid(commutator_part1_char1, 1, 1) = " " Then
+commutator_part1_char1 = Mid(commutator_part1_char1, 2, Len(commutator_part1_char1) - 1)
+End If
+For j = i + 1 To UBound(arr)
+commutator_part1_char2 = commutator_part1_char2 & arr(j) & " "
+Next j
+commutator_part1_char2 = Mid(commutator_part1_char2, 1, Len(commutator_part1_char2) - 1)
+commutator_part1_charfull = commutator_part1_char2 & " " & commutator_part1_char1
+commutator_part1_charfull = simplify(commutator_part1_charfull)
+commutator_part0 (commutator_part1_charfull)
+If commutator_part0_char1_out <> "" Then
+commutator_part1_char0_out = combine(commutator_part1_char1, commutator_part0_char0_out)
+commutator_part1_char1_out = commutator_part0_char1_out
+commutator_part1_char2_out = commutator_part0_char2_out
+Exit Sub
+End If
+Next i
+End Sub
+Function stm(s1 As String)
+s1 = complicate(s1)
+stm = Len(s1) - Len(Replace(s1, " ", "", , , vbBinaryCompare)) + 1
+End Function
+Function qtm(s1 As String)
+qtm = (Len(s1) - Len(Replace(s1, " ", "", , , vbBinaryCompare))) + (Len(s1) - Len(Replace(s1, "2", "", , , vbBinaryCompare))) + 1
+End Function
+Sub commutator_part2_case(s1 As String)
+Dim leftpart1 As String
+Dim rightpart1 As String
+leftpart1 = leftpart
+rightpart1 = rightpart
+leftpart1 = simplify(combine(leftpart1, s1))
+rightpart1 = simplify(combine(inverse(s1), rightpart1))
+commutator_part1 (leftpart1)
+commutator_part2_char0_out = commutator_part1_char0_out
+commutator_part2_char1_out = commutator_part1_char1_out
+commutator_part2_char2_out = commutator_part1_char2_out
+commutator_part1 (rightpart1)
+commutator_part2_char3_out = commutator_part1_char0_out
+commutator_part2_char4_out = commutator_part1_char1_out
+commutator_part2_char5_out = commutator_part1_char2_out
+If ((commutator_part2_char1_out <> "") And (commutator_part2_char4_out <> "")) Then
+composition = 1
+leftpart = leftpart1
+rightpart = rightpart1
+Exit Sub
+End If
+End Sub
+Sub commutator_part2(s1 As String)
+Dim arr
+composition = 0
+commutator_part2_char0_out = ""
+commutator_part2_char1_out = ""
+commutator_part2_char2_out = ""
+commutator_part2_char3_out = ""
+commutator_part2_char4_out = ""
+commutator_part2_char5_out = ""
+commutator_part1 (s1)
+If commutator_part1_char1_out <> "" Then
+commutator_part2_char0_out = commutator_part1_char0_out
+commutator_part2_char1_out = commutator_part1_char1_out
+commutator_part2_char2_out = commutator_part1_char2_out
+Exit Sub
+End If
+arr = Split(s1, " ")
+For k = 2 To (UBound(arr) - 2) Step 1
+leftpart = ""
+rightpart = ""
+For i = 0 To k Step 1
+leftpart = leftpart & arr(i) & " "
+Next i
+For i = k + 1 To UBound(arr) Step 1
+rightpart = rightpart & arr(i) & " "
+Next i
+leftpart = Mid(leftpart, 1, Len(leftpart) - 1)
+rightpart = Mid(rightpart, 1, Len(rightpart) - 1)
+If composition = 0 Then
+commutator_part2_case ("")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("U")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("U'")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("U2")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("S")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("S'")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("S2")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("R")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("R'")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("R2")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("U S")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("U' S")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("U S'")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("U' S'")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("S U")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("S' U")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("S U'")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("S' U'")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("E R")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("E' R")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("E R'")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("E' R'")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("R E")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("R' E")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("R E'")
+Else
+Exit Sub
+End If
+If composition = 0 Then
+commutator_part2_case ("R' E'")
+Else
+Exit Sub
+End If
+Next k
+End Sub
+Function commutatorfull(s1 As String) As String    '这里面已经带上完整输出了
+Dim commutatorleft1 As String
+Dim commutatorright1 As String
+Dim commutator1 As String
+s1 = simplify(s1)
+If s1 = "M U2 E2 M U2 E2" Then
+commutatorfull = "[M,u2 y2]"
+Exit Function
+End If
+If s1 = "M' U2 E2 M' U2 E2" Then
+commutatorfull = "[M',u2 y2]"
+Exit Function
+End If
+If s1 = "U2 E2 M U2 E2 M" Then
+commutatorfull = "[u2 y2,M']"
+Exit Function
+End If
+If s1 = "U2 E2 M' U2 E2 M'" Then
+commutatorfull = "[u2 y2,M]"
+Exit Function
+End If
+Call commutator_part2(s1)
+If composition = 0 Then          '如果不是叠加
+commutator1 = ""
+If commutator_part2_char1_out <> "" Then
+Call commutator_partafter1    '此时加上后处理
+End If
+If composition = 0 Then          '如果不是叠加
+If commutator_part2_char0_out = "" Then
+commutator1 = "[" & complicate(simplify(commutator_part2_char1_out)) & "," & complicate(simplify(commutator_part2_char2_out)) & "]"
+Else
+commutator1 = complicate(simplify(commutator_part2_char0_out)) & ":[" & complicate(simplify(commutator_part2_char1_out)) & "," & complicate(simplify(commutator_part2_char2_out)) & "]"
+End If
+commutatorfull = complicate(commutator1)
+End If
+End If
+If composition = 1 Then          '如果是叠加
+commutatorleft1 = ""
+If commutator_part2_char0_out = "" Then
+commutatorleft1 = "[" & complicate(simplify(commutator_part2_char1_out)) & "," & complicate(simplify(commutator_part2_char2_out)) & "]"
+Else
+commutatorleft1 = complicate(simplify(commutator_part2_char0_out)) & ":[" & complicate(simplify(commutator_part2_char1_out)) & "," & complicate(simplify(commutator_part2_char2_out)) & "]"
+End If
+commutatorleft = complicate(commutatorleft1)
+commutatorright1 = ""
+If commutator_part2_char3_out = "" Then
+commutatorright1 = "[" & complicate(simplify(commutator_part2_char4_out)) & "," & complicate(simplify(commutator_part2_char5_out)) & "]"
+Else
+commutatorright1 = complicate(simplify(commutator_part2_char3_out)) & ":[" & complicate(simplify(commutator_part2_char4_out)) & "," & complicate(simplify(commutator_part2_char5_out)) & "]"
+End If
+commutatorright = complicate(commutatorright1)
+commutatorfull = commutatorleft & "+" & commutatorright
+End If
+End Function
+Function commutator(s1 As String)         '处理含有set up的复杂叠加转换机 R' U M U M' U M U r
+Dim arr
+Dim arr1
+Dim commutator_char1 As String
+Dim commutator_char2 As String
+Dim commutator_temp As String
+Dim commutator_charfull As String
+s1 = simplify(s1)
+arr = Split(s1, " ")
+half = (UBound(arr) + 1) / 2
+commutator_char1 = ""
+commutator_temp = commutatorfull(s1)
+commutator_charfull = s1
+arr1 = Split(commutator_charfull, " ")
+If (commutator_temp <> "[,]") And simplify(combine(arr1(0), arr1(UBound(arr1)))) <> "" Then
+commutator = commutator_temp
+Exit Function
+End If
+For i = 0 To half
+commutator_char2 = ""
+commutator_char1 = commutator_char1 & " " & arr(i)
+If Mid(commutator_char1, 1, 1) = " " Then
+commutator_char1 = Mid(commutator_char1, 2, Len(commutator_char1) - 1)
+End If
+For j = i + 1 To UBound(arr)
+commutator_char2 = commutator_char2 & arr(j) & " "
+Next j
+commutator_char2 = Mid(commutator_char2, 1, Len(commutator_char2) - 1)
+commutator_charfull = commutator_char2 & " " & commutator_char1
+commutator_charfull = simplify(commutator_charfull)
+arr1 = Split(commutator_charfull, " ")
+If simplify(combine(arr1(0), arr1(UBound(arr1)))) <> "" Then
+commutator_temp = commutatorfull(commutator_charfull)
+If commutator_temp <> "[,]" Then
+If composition = 1 Then
+commutator = complicate(commutator_char1) & ":[" & commutator_temp & "]"
+End If
+If composition = 0 Then
+If Mid(commutator_temp, 1, 1) = "[" Then
+commutator = complicate(complicate(commutator_char1) & ":" & commutator_temp & "")
+Else
+commutator = complicate(complicate(commutator_char1) & " " & commutator_temp & "")   '避免多余冒号
+End If
+End If
+Exit Function
+End If
+End If
+Next i
+End Function
+Public Sub afterpro(afterpro_char0 As String, afterpro_char1 As String, afterpro_char2 As String)
+Dim afterprochar As String
+Dim afterproleft As String
+Dim afterproright As String
+afterproleft = ""
+afterproright = ""
+afterprochar = ""
+afterproleft = combine(afterpro_char0, combine(afterpro_char1, afterpro_char2))
+afterproright = combine(combine(inverse(afterpro_char1), inverse(afterpro_char2)), inverse(afterpro_char0))
+afterprochar = simplify(combine(afterproleft, afterproright))
+Call commutator_part1(afterprochar)
+'If commutator_part1_char1_out <> "" Then
+afterpro_char0_out = complicate(simplify(commutator_part1_char0_out))
+afterpro_char1_out = complicate(simplify(commutator_part1_char1_out))
+afterpro_char2_out = complicate(simplify(commutator_part1_char2_out))
+'End If
+End Sub
+Sub commutator_partafter1()       '简化[D R D' R',U']
+Dim commutator_part2_char0_out_temp As String
+Dim commutator_part2_char1_out_temp As String
+Dim commutator_part2_char2_out_temp As String
+Dim commutator_part2_char3_out_temp As String
+Dim commutator_part2_char4_out_temp As String
+Dim commutator_part2_char5_out_temp As String
+Dim commutator_part2_char0_out_temp1 As String
+Dim commutator_part2_char1_out_temp1 As String
+Dim commutator_part2_char2_out_temp1 As String
+Dim commutator_part2_char3_out_temp1 As String
+Dim commutator_part2_char4_out_temp1 As String
+Dim commutator_part2_char5_out_temp1 As String
+Dim arr
+Dim k As Long
+commutator_part2_char0_out_temp = commutator_part2_char0_out
+commutator_part2_char1_out_temp = commutator_part2_char1_out
+commutator_part2_char2_out_temp = commutator_part2_char2_out
+arr = Split(commutator_part2_char1_out_temp, " ")
+half = (UBound(arr) + 1) / 2
+If Len(commutator_part2_char2_out_temp) <= 2 Then
+    If ((correlation(arr(0), commutator_part2_char2_out_temp) = 1) Or (correlation(arr(0), commutator_part2_char2_out_temp) = 2)) Then
+    commutator_part2_char1_out_temp = ""
+    For i = 1 To UBound(arr)
+    commutator_part2_char1_out_temp = commutator_part2_char1_out_temp & arr(i) & " "
+    Next i
+    commutator_part2_char1_out_temp = Mid(commutator_part2_char1_out_temp, 1, Len(commutator_part2_char1_out_temp) - 1)
+    commutator_part2_char0_out = combine(commutator_part2_char0_out_temp, arr(0))
+    commutator_part2_char1_out = commutator_part2_char1_out_temp
+    commutator_part2_char2_out = commutator_part2_char2_out_temp
+    End If
+End If
+arr = Split(commutator_part2_char2_out_temp, " ")
+half = (UBound(arr) + 1) / 2
+If Len(commutator_part2_char1_out_temp) <= 2 Then
+    If ((correlation(arr(0), commutator_part2_char1_out_temp) = 1) Or (correlation(arr(0), commutator_part2_char1_out_temp) = 2)) Then
+    commutator_part2_char2_out_temp = ""
+    For i = 1 To UBound(arr)
+    commutator_part2_char2_out_temp = commutator_part2_char2_out_temp & arr(i) & " "
+    Next i
+    commutator_part2_char2_out_temp = Mid(commutator_part2_char2_out_temp, 1, Len(commutator_part2_char2_out_temp) - 1)
+    commutator_part2_char0_out = combine(commutator_part2_char0_out_temp, arr(0))
+    commutator_part2_char1_out = commutator_part2_char1_out_temp
+    commutator_part2_char2_out = commutator_part2_char2_out_temp
+    End If
+End If
+'处理
+'C:[A,B]=C A:[B,A']=C B:[B',A]
+'C (A B A' B') C'
+'C A (B A' B' A) A' C'
+'C B (B' A B A') B' C'
+commutator_part2_char0_out_temp = commutator_part2_char0_out
+commutator_part2_char1_out_temp = commutator_part2_char1_out
+commutator_part2_char2_out_temp = commutator_part2_char2_out
+For i = 1 To 3
+commutator_part2_stm = stm(commutator_part2_char0_out_temp)
+If ((stm(simplify(combine(commutator_part2_char0_out_temp, commutator_part2_char1_out_temp)))) < commutator_part2_stm - 1) Then     '很有优势才采用
+commutator_part2_char0_out = simplify(combine(commutator_part2_char0_out_temp, commutator_part2_char1_out_temp))
+commutator_part2_char1_out = commutator_part2_char2
+commutator_part2_char2_out = inverse(commutator_part2_char1_out_temp)
+End If
+If ((stm(simplify(combine(commutator_part2_char0_out_temp, commutator_part2_char2_out_temp)))) < commutator_part2_stm - 1) Then
+commutator_part2_char0_out = simplify(combine(commutator_part2_char0_out_temp, commutator_part2_char2_out_temp))
+commutator_part2_char1_out = inverse(commutator_part2_char2_out_temp)
+commutator_part2_char2_out = commutator_part2_char1_out_temp
+End If
+Next i
+'继续处理
+'引理1:C:[A,B]=[C,A]+[A,C B]
+'引理2:C:[A,B]=[C A,B]+[B,C]
+Call afterpro("", commutator_part2_char0_out_temp, commutator_part2_char1_out_temp)
+commutator_part2_char0_out_temp1 = afterpro_char0_out
+commutator_part2_char1_out_temp1 = afterpro_char1_out
+commutator_part2_char2_out_temp1 = afterpro_char2_out
+Call afterpro("", commutator_part2_char1_out_temp, simplify(combine(commutator_part2_char0_out_temp, commutator_part2_char2_out_temp)))
+commutator_part2_char3_out_temp1 = afterpro_char0_out
+commutator_part2_char4_out_temp1 = afterpro_char1_out
+commutator_part2_char5_out_temp1 = afterpro_char2_out
+If commutator_part2_char1_out_temp1 <> "" And commutator_part2_char4_out_temp1 <> "" And (stm(commutator_part2_char1_out_temp1) < stm(commutator_part2_char2_out_temp) - 1) And (stm(commutator_part2_char2_out_temp1) < stm(commutator_part2_char2_out_temp) - 1) And (stm(commutator_part2_char4_out_temp1) < stm(commutator_part2_char2_out_temp) - 1) And (stm(commutator_part2_char5_out_temp1) < stm(commutator_part2_char2_out_temp) - 1) Then '很有优势才采用
+commutator_part2_char0_out = commutator_part2_char0_out_temp1
+commutator_part2_char1_out = commutator_part2_char1_out_temp1
+commutator_part2_char2_out = commutator_part2_char2_out_temp1
+commutator_part2_char3_out = commutator_part2_char3_out_temp1
+commutator_part2_char4_out = commutator_part2_char4_out_temp1
+commutator_part2_char5_out = commutator_part2_char5_out_temp1
+composition = 1
+End If
+Call afterpro("", simplify(combine(commutator_part2_char0_out_temp, commutator_part2_char1_out_temp)), commutator_part2_char2_out_temp)
+commutator_part2_char0_out_temp1 = afterpro_char0_out
+commutator_part2_char1_out_temp1 = afterpro_char1_out
+commutator_part2_char2_out_temp1 = afterpro_char2_out
+Call afterpro("", commutator_part2_char2_out_temp, commutator_part2_char0_out_temp)
+commutator_part2_char3_out_temp1 = afterpro_char0_out
+commutator_part2_char4_out_temp1 = afterpro_char1_out
+commutator_part2_char5_out_temp1 = afterpro_char2_out
+If commutator_part2_char1_out_temp1 <> "" And commutator_part2_char4_out_temp1 <> "" And (stm(commutator_part2_char1_out_temp1) < stm(commutator_part2_char1_out_temp) - 1) And (stm(commutator_part2_char2_out_temp1) < stm(commutator_part2_char1_out_temp) - 1) And (stm(commutator_part2_char4_out_temp1) < stm(commutator_part2_char1_out_temp) - 1) And (stm(commutator_part2_char5_out_temp1) < stm(commutator_part2_char1_out_temp) - 1) Then '很有优势才采用
+commutator_part2_char0_out = commutator_part2_char0_out_temp1
+commutator_part2_char1_out = commutator_part2_char1_out_temp1
+commutator_part2_char2_out = commutator_part2_char2_out_temp1
+commutator_part2_char3_out = commutator_part2_char3_out_temp1
+commutator_part2_char4_out = commutator_part2_char4_out_temp1
+commutator_part2_char5_out = commutator_part2_char5_out_temp1
+composition = 1
+End If
+End Sub
